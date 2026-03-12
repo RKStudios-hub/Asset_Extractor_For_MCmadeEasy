@@ -1,25 +1,56 @@
 <img src="Asset Extractor Banner.png" width="100%">
 
-### A lightweight **Minecraft mod data extractor** that scans mod **JAR files** and extracts useful asset IDs such as **items, blocks, biomes, structures, and entities**.
-### These IDs can then be used directly in **Minecraft commands or mod development workflows**.
+<h1 align="center">🧩 Asset Extractor for MCmadeEasy</h1>
+
+<p align="center">
+A lightweight <b>Minecraft mod data extractor</b> that scans mod <b>JAR files</b> and extracts useful asset IDs such as <b>items, blocks, biomes, structures, and entities</b>.
+</p>
+
+<p align="center">
+These IDs can be used directly in <b>Minecraft commands</b> or <b>mod development workflows</b>.
+</p>
 
 ---
 
-## ✨ Features
+<p align="center">
 
-* 📦 Extract **item IDs** from mod JAR files
-* 🧱 Extract **block IDs**
-* 🌍 Extract **biome IDs**
-* 🏛 Extract **structure IDs**
-* 👾 Extract **entity IDs**
-* 🖼 Extract **item textures (PNG files)**
-* 📂 Automatically creates **numbered extraction folders** (`Extract_1`, `Extract_2`, etc.)
+<a href="https://github.com/RKStudios-hub/Asset_Extractor_For_MCmadeEasy/releases/tag/v1.0">
+<img src="https://img.shields.io/badge/⬇ Download-Latest%20Release-brightgreen?style=for-the-badge">
+</a>
+
+<a href="https://github.com/RKStudios-hub/Asset_Extractor_For_MCmadeEasy">
+<img src="https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github">
+</a>
+
+</p>
 
 ---
 
-## 📄 Output Format
+# ✨ Features
 
-All IDs are exported using the standard Minecraft namespace format:
+| Icon | Feature                                               |
+| ---- | ----------------------------------------------------- |
+| 📦   | Extract **Item IDs** from mod JAR files               |
+| 🧱   | Extract **Block IDs**                                 |
+| 🌍   | Extract **Biome IDs**                                 |
+| 🏛   | Extract **Structure IDs**                             |
+| 👾   | Extract **Entity IDs**                                |
+| 🖼   | Extract **Item Textures (PNG)**                       |
+| 📂   | Automatically creates **numbered extraction folders** |
+
+Example folders created:
+
+```
+Extract_1
+Extract_2
+Extract_3
+```
+
+---
+
+# 📄 Output Format
+
+All IDs are exported using the **standard Minecraft namespace format**.
 
 ```
 modid:item_name
@@ -35,31 +66,49 @@ terralith:marble
 
 ---
 
-## 🚀 Usage
+# 🚀 How To Use
 
-1. Install **Python 3.x**
-2. Run the extractor:
+### 1️⃣ Install Python
+
+Install **Python 3.x**
+
+Download:
+https://www.python.org/downloads/
+
+---
+
+### 2️⃣ Run the extractor
 
 ```
 python minecraft_mod_extractor.py
 ```
 
-3. Choose what you want to extract:
+---
 
-   * Items
-   * Blocks
-   * Biomes
-   * Structures
-   * Entities
-   * Textures
+### 3️⃣ Choose what to extract
 
-4. Select your **mod JAR files**
-
-5. Check the **`Extract` folder** for the generated files.
+* 📦 Items
+* 🧱 Blocks
+* 🌍 Biomes
+* 🏛 Structures
+* 👾 Entities
+* 🖼 Textures
 
 ---
 
-## 📁 Output Files
+### 4️⃣ Select mod JAR files
+
+Choose the **Minecraft mod `.jar` files** you want to scan.
+
+---
+
+### 5️⃣ Check the output folder
+
+All results will appear inside the **`Extract` folder**.
+
+---
+
+# 📁 Output Files
 
 | File                   | Description                       |
 | ---------------------- | --------------------------------- |
@@ -73,7 +122,7 @@ python minecraft_mod_extractor.py
 
 ---
 
-## 🎮 Example Minecraft Commands
+# 🎮 Example Minecraft Commands
 
 ```
 /give @p mutantmonsters:creeper_shard
@@ -84,20 +133,30 @@ python minecraft_mod_extractor.py
 
 ---
 
-## ⚙️ Requirements
+# ⚙️ Requirements
 
-* **Python 3.x**
-* **Tkinter** (included with most Python installations)
+| Requirement   | Notes                                   |
+| ------------- | --------------------------------------- |
+| 🐍 Python 3.x | Required to run the script              |
+| 🖥 Tkinter    | Included with most Python installations |
 
 ---
 
-## 📜 License
+# 📥 Download
+
+Download the latest version from the **GitHub Releases page**:
+
+➡ https://github.com/RKStudios-hub/Asset_Extractor_For_MCmadeEasy/releases/tag/v1.0
+
+---
+
+# 📜 License
 
 This project is released under the **MIT License**.
 
 ---
 
-## ⚠️ Disclaimer
+# ⚠️ Disclaimer
 
 ```
 This project is an independent fan-made creation and is not affiliated with,
@@ -112,4 +171,4 @@ developer of this project.
 
 ---
 
-<h1 align="center">Made with 🖤 by <b>RK Studios</b></h1>
+<h2 align="center">🖤 Made with love by <b>RK Studios</b></h2>
