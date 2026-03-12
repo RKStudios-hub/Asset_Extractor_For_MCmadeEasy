@@ -4,8 +4,15 @@ import zipfile
 import os
 import json
 import threading
+import sys
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+try:
+    from PIL import Image, ImageTk
+    PIL_AVAILABLE = True
+except ImportError:
+    PIL_AVAILABLE = False
 
 def get_next_extract_folder():
     extract_dir = os.path.join(BASE_DIR, "Extracted")
@@ -419,5 +426,17 @@ class ModExtractorApp:
 
 if __name__ == "__main__":
     root = tk.Tk()
+    
+    # Set icon if available
+    icon_path = os.path.join(BASE_DIR, "icon.png")
+    if os.path.exists(icon_path) and PIL_AVAILABLE:
+        try:
+            img = Image.open(icon_path)
+            img = img.resize((64, 64), Image.Resampling.LANCZOS)
+            icon = ImageTk.PhotoImage(img)
+            root.iconphoto(False, icon)
+        except Exception as e:
+            print(f"Could not load icon: {e}")
+    
     app = ModExtractorApp(root)
     root.mainloop()
