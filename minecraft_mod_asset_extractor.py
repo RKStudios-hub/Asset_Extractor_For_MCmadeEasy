@@ -427,16 +427,25 @@ class ModExtractorApp:
 if __name__ == "__main__":
     root = tk.Tk()
     
-    # Set icon if available
-    icon_path = os.path.join(BASE_DIR, "icon.png")
-    if os.path.exists(icon_path) and PIL_AVAILABLE:
+    # Set icon - try multiple methods
+    icon_ico = os.path.join(BASE_DIR, "icon.ico")
+    icon_png = os.path.join(BASE_DIR, "icon.png")
+    
+    # Method 1: Try .ico file (best for Windows)
+    if os.path.exists(icon_ico):
         try:
-            img = Image.open(icon_path)
-            img = img.resize((64, 64), Image.Resampling.LANCZOS)
-            icon = ImageTk.PhotoImage(img)
-            root.iconphoto(False, icon)
+            root.iconbitmap(icon_ico)
         except Exception as e:
-            print(f"Could not load icon: {e}")
+            print(f"iconbitmap failed: {e}")
+            # Method 2: Try PNG via PhotoImage
+            if os.path.exists(icon_png) and PIL_AVAILABLE:
+                try:
+                    img = Image.open(icon_png)
+                    img = img.resize((64, 64), Image.Resampling.LANCZOS)
+                    icon = ImageTk.PhotoImage(img)
+                    root.iconphoto(False, icon)
+                except Exception as e2:
+                    print(f"iconphoto failed: {e2}")
     
     app = ModExtractorApp(root)
     root.mainloop()

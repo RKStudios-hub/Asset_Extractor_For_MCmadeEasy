@@ -1,2 +1,2 @@
-python minecraft_mod_extractor.py
+python minecraft_mod_asset_extractor.py
 pause
