@@ -13,6 +13,8 @@ try:
     PIL_AVAILABLE = True
 except ImportError:
     PIL_AVAILABLE = False
+    Image = None
+    ImageTk = None
 
 def get_next_extract_folder():
     extract_dir = os.path.join(BASE_DIR, "Extracted")
@@ -193,31 +195,68 @@ def save_lists(options, extract_folder):
                 f.write(f"{i}\n")
 
 class CustomCheckbutton(tk.Frame):
-    def __init__(self, parent, text, emoji, color, *args, **kwargs):
+    def __init__(self, parent, text, icon_name, color, icons_dir=None, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
         self.var = tk.BooleanVar(value=True)
-        self.emoji = emoji
+        self.icon_name = icon_name
         self.color = color
         self.text = text
         
         self.configure(bg="#1e293b", cursor="hand2")
         
+        # Try to load icon image
+        self.icon_image = None
+        if icons_dir is None:
+            icons_dir = os.path.join(BASE_DIR, "icons")
+        
+        icon_path = os.path.join(icons_dir, f"{icon_name}.png")
+        if os.path.exists(icon_path) and PIL_AVAILABLE:
+            try:
+                img = Image.open(icon_path)
+                img = img.resize((20, 20), Image.Resampling.LANCZOS)
+                self.icon_image = ImageTk.PhotoImage(img)
+            except Exception as e:
+                print(f"Could not load icon {icon_path}: {e}")
+        
+        # Create checkbox
         self.checkbox = tk.Checkbutton(self, variable=self.var, 
                                        font=("Segoe UI", 11),
                                        bg="#1e293b", fg=color,
                                        activebackground="#1e293b",
                                        selectcolor="#1e293b",
                                        bd=0, highlightthickness=0)
-        self.checkbox.pack(side=tk.LEFT, padx=(0, 8))
+        self.checkbox.pack(side=tk.LEFT, padx=(0, 5))
         
-        self.label = tk.Label(self, text=f"{emoji} {text}", 
-                              font=("Segoe UI", 11, "bold"),
-                              bg="#1e293b", fg="#e2e8f0")
-        self.label.pack(side=tk.LEFT)
+        # Create label with icon or emoji
+        if self.icon_image:
+            self.label = tk.Label(self, image=self.icon_image, 
+                                  bg="#1e293b")
+        else:
+            self.label = tk.Label(self, text=self.get_emoji(icon_name), 
+                                  font=("Segoe UI", 11),
+                                  bg="#1e293b", fg=color)
+        self.label.pack(side=tk.LEFT, padx=(0, 5))
+        
+        # Text label
+        self.text_label = tk.Label(self, text=text, 
+                                   font=("Segoe UI", 11, "bold"),
+                                   bg="#1e293b", fg="#e2e8f0")
+        self.text_label.pack(side=tk.LEFT)
         
         self.bind("<Button-1>", self.toggle)
         self.checkbox.bind("<Button-1>", self.toggle)
         self.label.bind("<Button-1>", self.toggle)
+        self.text_label.bind("<Button-1>", self.toggle)
+        
+    def get_emoji(self, icon_name):
+        emojis = {
+            "item": "🗡️",
+            "entity": "👹", 
+            "biome": "🌲",
+            "structure": "🏰",
+            "texture": "🖼️"
+        }
+        return emojis.get(icon_name, "📄")
         
     def toggle(self, event=None):
         self.var.set(not self.var.get())
@@ -271,19 +310,19 @@ class ModExtractorApp:
         options_frame = tk.Frame(extract_card, bg=colors["card"])
         options_frame.pack(fill=tk.X, padx=15, pady=(0, 15))
         
-        self.chk_items = CustomCheckbutton(options_frame, "Items", "items", "#3b82f6")
-        self.chk_items.pack(side=tk.LEFT, padx=(0, 20))
+        self.chk_items = CustomCheckbutton(options_frame, "Items", "item", "#3b82f6")
+        self.chk_items.pack(side=tk.LEFT, padx=(0, 15))
         
-        self.chk_entities = CustomCheckbutton(options_frame, "Entities", "mobs", "#f59e0b")
-        self.chk_entities.pack(side=tk.LEFT, padx=(0, 20))
+        self.chk_entities = CustomCheckbutton(options_frame, "Entities", "entity", "#f59e0b")
+        self.chk_entities.pack(side=tk.LEFT, padx=(0, 15))
         
-        self.chk_biomes = CustomCheckbutton(options_frame, "Biomes", "biomes", "#10b981")
-        self.chk_biomes.pack(side=tk.LEFT, padx=(0, 20))
+        self.chk_biomes = CustomCheckbutton(options_frame, "Biomes", "biome", "#10b981")
+        self.chk_biomes.pack(side=tk.LEFT, padx=(0, 15))
         
-        self.chk_structures = CustomCheckbutton(options_frame, "Structures", "ruins", "#8b5cf6")
-        self.chk_structures.pack(side=tk.LEFT, padx=(0, 20))
+        self.chk_structures = CustomCheckbutton(options_frame, "Structures", "structure", "#8b5cf6")
+        self.chk_structures.pack(side=tk.LEFT, padx=(0, 15))
         
-        self.chk_pngs = CustomCheckbutton(options_frame, "Textures", "textures", "#ec4899")
+        self.chk_pngs = CustomCheckbutton(options_frame, "Textures", "texture", "#ec4899")
         self.chk_pngs.pack(side=tk.LEFT)
         
         self.upload_btn = tk.Button(main_frame, text="Select Mod JAR Files", 
